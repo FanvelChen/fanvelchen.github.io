@@ -14,9 +14,9 @@ tags:
 
 ## 生成数据
 生成三维独立 $[0,1]$ 均匀分布特征 $x1,x3,x5$ ，ground truth为：
-$$
-y = 4 \times x_1 + 2 \times x_2 + \varepsilon \\ \tag{1}
-$$
+
+$$y = 4 \times x_1 + 2 \times x_2 + \varepsilon \\ \tag{1}$$
+
 其中 $\varepsilon \sim \mathcal{N}(0,1)$ 。
 $x_2$ 与 $x_1^2$ 正相关，并归一化。$x_4$ 和 $x_3$ 负相关，并归一化。$x_5$ 为无关特征， $x_6​$ 为偏置项
 
