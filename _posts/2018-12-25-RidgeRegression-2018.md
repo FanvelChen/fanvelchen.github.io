@@ -5,6 +5,7 @@ date:       2018-12-25
 author:     Fanvel Chen
 header-img: img/posts/rigde_regression_bg.jpg
 catalog: true
+mathjax: true
 tags:
     - machine learning
 ---
