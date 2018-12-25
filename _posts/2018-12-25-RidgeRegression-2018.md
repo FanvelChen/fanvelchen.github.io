@@ -81,7 +81,7 @@ $$
 $$
 \begin{align}
 \begin{split}
-\mathbb{E}[\sum_{j=1}^p(x_{ij}-\bar{x}_j)\beta_j^c] &= \sum_{j=1}^p (\mathbb{E}(x_{ij}) - \bar{x}_j)\beta_j^c  \\
+\Bbb{E}[\sum_{j=1}^p(x_{ij}-\bar{x}_j)\beta_j^c] &= \sum_{j=1}^p (\Bbb{E}(x_{ij}) - \bar{x}_j)\beta_j^c  \\
 &= \sum_{j=1}^p(\bar{x}_j - \bar{x}_j)\beta_j^c   \\
 &= 0   
 \end{split}   \tag{8}
