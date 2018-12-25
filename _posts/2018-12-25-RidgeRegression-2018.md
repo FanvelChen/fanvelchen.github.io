@@ -10,7 +10,6 @@ tags:
 ---
 
 # 岭回归（Ridge Regression）
-[TOC]
 
 ## 生成数据
 生成三维独立 $[0,1]$ 均匀分布特征 $x1,x3,x5$ ，ground truth为：
@@ -37,33 +36,46 @@ def geneData(ins_num):
 ## 数据预处理
 ### 标准化（normally standardized）
 把每一维数据标准化到 $[0,1]$ 的范围，因为对系数 $\beta$ 进行 $L2$ 范数限制下，不同纬度不同的量纲会带来权值比例的失衡。
+
 >The ridge solutions are not equivariant under scaling of the inputs, and so one normally standardizes the inputs
+
 ### 中心化（centered）
 对每个数据的每一维的取值，都减去这一维的均值
+
 $$
 x_{ij} - \bar{x}_j  \tag{2}
 $$
+
 #### 原因：
 原优化目标函数为
+
 $$
 \min L(\beta) = \sum_{i=1}^{N} \left( y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j  \right)^2 +  \lambda \sum_{j=1}^p \beta_j^2   \tag{3}
 $$
+
 可以写为
+
 $$
 \min L(\beta) = \sum_{i=1}^{N} \left( y_i - \beta_0 - \sum_{j=1}^p \bar{x}_j \beta_j + \sum_{j=1}^p (x_{ij} -\bar{x}_j)\beta_j  \right)^2 +  \lambda \sum_{j=1}^p \beta_j^2   \tag{4}
 $$
+
 所以对 $\beta$ 做代换成为 $\beta^{c}$
+
 $$
 \begin{eqnarray*}
 \beta_0^c &=& \beta_0 + \sum_{j=1}^p \bar{x}_j \beta_j   \tag{5}  \\
 \beta_j^c &=& \beta_j \quad j = 1,2,\cdots,p  \tag{6}
 \end{eqnarray*}
 $$
+
 即
+
 $$
 \min L(\beta) = \sum_{i=1}^{N} \left( y_i - \beta_0^c - \sum_{j=1}^p (x_{ij} - \bar{x}_j) \beta_j^c  \right)^2 +  \lambda \sum_{j=1}^p (\beta_j^c)^2   \tag{7}
 $$
+
 则
+
 $$
 \begin{align}
 \begin{split}
@@ -86,7 +98,9 @@ $$
 \hat{\beta'} &=& (X^T X+\lambda I)^{-1}X^T(y-\textbf{1} \bar{y})  \tag{10}
 \end{eqnarray*}
 $$
+
 其中 $\textbf{1} = (1,1,\cdots,1)^T \in \mathbb{R}^{N \times 1}$，而 $X$ 为已经中心化的样本数据。
+
 $$
 \begin{align}
 \begin{split}
@@ -97,6 +111,7 @@ $$
 \end{split}   \tag{11}
 \end{align}
 $$
+
 即 $\hat{\beta} = \hat{\beta'}$ ，$y$ 的中心化没有影响
 
 #### 如果数据不中心化会如何
