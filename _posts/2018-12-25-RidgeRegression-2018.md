@@ -37,7 +37,7 @@ def geneData(ins_num):
 
 ## 数据预处理
 ### 标准化（normally standardized）
-把每一维数据标准化到 $[0,1]$ 的范围，因为对系数 $\beta$ 进行 $L2$ 范数限制下，不同纬度不同的量纲会带来权值比例的失衡。
+把每一维数据标准化到 $[0,1]$ 的范围，因为对系数 $\beta$ 进行 $L2$ 范数限制下，不同维度不同的量纲会带来权值比例的失衡。
 
 >The ridge solutions are not equivariant under scaling of the inputs, and so one normally standardizes the inputs
 
