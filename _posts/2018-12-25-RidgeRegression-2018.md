@@ -4,11 +4,12 @@ title:      岭回归 Ridge Regression
 date:       2018-12-25
 author:     Fanvel Chen
 header-img: img/posts/rigde_regression_bg.jpg
-catalog: true
-mathjax: true
+catalog:    true
+mathjax:    true
 tags:
     - machine learning
 ---
+
 
 # 岭回归（Ridge Regression）
 
