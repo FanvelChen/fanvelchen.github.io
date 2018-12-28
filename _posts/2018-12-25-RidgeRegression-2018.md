@@ -14,9 +14,11 @@ tags:
 # 岭回归（Ridge Regression）
 
 ## 1. 基本原理
+
 ### 目标函数
 
 通过引入一个参数相关的惩罚项：
+
 $$
 \beta^{ridge} = argmin_{\beta} \left\{ \sum_{i=1}^N (y_i - \beta_0 - \sum_{j=1}^p x_{ij}^p \beta )^2 + \lambda \sum_{j=1}^p \beta_{j}^2 \right\}   \tag{1.1}
 $$
@@ -26,23 +28,27 @@ $$
 ### 闭式解
 
 $X$ 经过中心化（减去每一维的均值）和标准化（取值在 $[0,1]$ ）后，用 $\bar{y}$  作为 $\beta_0$ 的估计值，$X \in \mathbb{R}^{N \times p}$ 
+
 $$
 RSS(\lambda) = (y-X \beta)^T(y-X\beta) + \lambda \beta^T \beta \tag{1.2}
 $$
 
 对 $\beta$ 求导等于0可得
+
 $$
 \hat{\beta}^{ridge} = (X^TX+\lambda I)^{-1}X^Ty \tag{1.3}
 $$
+
 可以防止在 $X^TX$ 不满秩的情况下（即不同特征维度有线性相关性）无法求逆。 
 
 ### 一些性质
 
 #### 岭回归系数 $\beta^{ridge}$ 和最小二乘系数 $\beta^{ls}$ 关系
 
-对 $X$ 进行 SVD​ : $X = USV^T$
+对 $X$ 进行 SVD : $X = USV^T$
 
- 则 $y$ 的估计分别为
+则 $y$ 的估计分别为
+
 $$
 \begin{align}
 \begin{split}
@@ -68,10 +74,13 @@ $$
 $$
 
 相当于估计值在 $X$ 的每个奇异值特征方向上进行 $\frac{d_j^2}{d_j^2+\lambda}$ 的尺度缩小。
+
 $$
 X^TX = VS^2V^T  \tag{1.6}
 $$
+
 则 $V$ 的列向量 $v_j$ 即 $X$ 的主成分方向， $z_j = Xv_j$ 即 $X$ 投影到 $v_j$ 的表示。
+
 $$
 Var(z_j)=Var(Xv_j) = Cov(X,X) = \frac{d_j^2}{N-1}  \tag{1.7}
 $$
@@ -97,14 +106,16 @@ $$
 
 
 
-
-
 ## 2. 一个实验
+
 ### 生成数据
+
 生成三维独立 $[0,1]$ 均匀分布特征 $x1,x2,x3$ ，ground truth为：
+
 $$
 y = 4 \times x_1 + 2 \times x_2 + \varepsilon \\ \tag{2.1}
 $$
+
 其中 $\varepsilon \sim \mathcal{N}(0,1)$ 。
 $ x_4$ 与 $x_1^2$ 正相关，并归一化。$ x_5 $ 和 $ x_2 $ 负相关，并归一化。$ x_3 $ 为无关特征， $x_6$ 为偏置项
 
@@ -123,35 +134,51 @@ def geneData(ins_num):
 ```
 
 ### 数据预处理
+
 #### 标准化（normally standardized）
+
 把每一维数据标准化到 $[0,1]$ 的范围，因为对系数 $\beta$ 进行 $L2$ 范数限制下，不同纬度不同的量纲会带来权值比例的失衡。
+
 >The ridge solutions are not equivariant under scaling of the inputs, and so one normally standardizes the inputs
+
 ### 中心化（centered）
 对每个数据的每一维的取值，都减去这一维的均值
+
 $$
 x_{ij} - \bar{x}_j  \tag{2.2}
 $$
+
 ##### 原因：
+
 原优化目标函数为
+
 $$
 \min L(\beta) = \sum_{i=1}^{N} \left( y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j  \right)^2 +  \lambda \sum_{j=1}^p \beta_j^2   \tag{2.3}
 $$
+
 可以写为
+
 $$
 \min L(\beta) = \sum_{i=1}^{N} \left( y_i - \beta_0 - \sum_{j=1}^p \bar{x}_j \beta_j + \sum_{j=1}^p (x_{ij} -\bar{x}_j)\beta_j  \right)^2 +  \lambda \sum_{j=1}^p \beta_j^2   \tag{2.4}
 $$
+
 所以对 $\beta$ 做代换成为 $\beta^{c}$
+
 $$
 \begin{eqnarray*}
 \beta_0^c &=& \beta_0 + \sum_{j=1}^p \bar{x}_j \beta_j   \tag{2.5}  \\
 \beta_j^c &=& \beta_j \quad j = 1,2,\cdots,p  \tag{2.6}
 \end{eqnarray*}
 $$
+
 即
+
 $$
 \min L(\beta) = \sum_{i=1}^{N} \left( y_i - \beta_0^c - \sum_{j=1}^p (x_{ij} - \bar{x}_j) \beta_j^c  \right)^2 +  \lambda \sum_{j=1}^p (\beta_j^c)^2   \tag{2.7}
 $$
+
 则
+
 $$
 \begin{align}
 \begin{split}
@@ -174,7 +201,9 @@ $$
 \hat{\beta'} &=& (X^T X+\lambda I)^{-1}X^T(y-\textbf{1} \bar{y})  \tag{2.10}
 \end{eqnarray*}
 $$
+
 其中 $\textbf{1} = (1,1,\cdots,1)^T \in \mathbb{R}^{N \times 1}$，而 $X$ 为已经中心化的样本数据。
+
 $$
 \begin{align}
 \begin{split}
@@ -185,6 +214,7 @@ $$
 \end{split}   \tag{2.11}
 \end{align}
 $$
+
 即 $\hat{\beta} = \hat{\beta'}$ ，$y$ 的中心化没有影响
 
 ##### 如果数据不中心化会如何
@@ -286,3 +316,5 @@ RSS: 31.491254575154056 	w: [ 3.86828641  1.99646778  0.03546245  0.06938821 -0.
 ### 系数随 $\lambda$ 的变化
 
 ![ridge_lambda](https://ws2.sinaimg.cn/large/006tNbRwly1fymd9f4brcj30h30cdgme.jpg)
+
+可以看到 $w4,w5$ 是不稳定的
