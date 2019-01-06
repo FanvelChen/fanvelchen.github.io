@@ -267,7 +267,7 @@ $$
 \boldsymbol{z} = \boldsymbol{W}^T \boldsymbol{h} + \boldsymbol{b}
 $$
 
-where $z_i = \log \hat{P}(y = i \, | \, \boldsymbol{x})$ , and we exponentiate and normalize $z$:
+where $z_i = \log \hat{P}(y = i \, \| \, \boldsymbol{x})$ , and we exponentiate and normalize $z$:
 
 $$
 softmax(\boldsymbol{z})_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
@@ -311,6 +311,6 @@ One possibility is to not have an activation at all. If every layer of the neura
 Considering a $n$-dimension input and $p$-dimension output layer $\boldsymbol{h}=g(\boldsymbol{W}^T \boldsymbol{x}+\boldsymbol{b}) = g(\boldsymbol{V}^T\boldsymbol{U}^T \boldsymbol{x}+\boldsymbol{b})$ , $\boldsymbol{W} \in \mathbb{R}^{n \times p}, \boldsymbol{U} \in \mathbb{R}^{n \times q}, \boldsymbol{V} \in \mathbb{R}^{q \times p}$
 if $q(n+p) < np$ ,it can save parameters. It comes at the cost of constraining the linear transformation to be low rank, but these low-rank relationships are often suﬃcient.
 others:
-1. radial basis function, RBF: $h_i = \exp(-\frac{1}{\sigma_i^2} \left\| \boldsymbol{W}_{:,i} - \boldsymbol{x} \right\|^2)$
+1. radial basis function, RBF: $h_i = \exp(-\frac{1}{\sigma_i^2} \left\| \left\| \boldsymbol{W}_{:,i} - \boldsymbol{x} \right\| \right\|^2)$
 2. softplus $\zeta(z) = \log(1+e^z)$ , a smoother version of ReLU.
 3. hard tans: $g(z) = \max(-1, \min(1,z))$
