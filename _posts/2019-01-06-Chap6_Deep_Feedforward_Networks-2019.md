@@ -23,7 +23,9 @@ How to choose the mapping $\phi$
 ## 6.1 Example: Learning XOR
 
 target function : $y = f^*(\boldsymbol{x})$ we want to learn.
+
 model provides a function : $y = f(\boldsymbol{x};\boldsymbol{\theta})$
+
 treat this problem as a **regression problem**. use a **mean squared error** loss function.
 
 $$
@@ -137,6 +139,7 @@ $$
 #### 6.2.1.1 Learning Conditional distribution with Maximum Likelihood
 
 Most networks are trained using **maximum likelihood** . The cost function is simply the **negative log-likelihood** , or equivalently the **cross-entropy** between the training data and the model distribution
+
 $$
 J(\boldsymbol{\theta}) = - \mathbb{E}_{\mathsf{x,y} \sim \hat{p}_{data}} \log p_{model}(\boldsymbol{y}\, |\, \boldsymbol{x} )
 $$
@@ -168,9 +171,11 @@ f^* = \arg \min_f \mathbb{E}_{\mathsf{x,y} \sim p_{data} }||\boldsymbol{y} -f(\b
 $$
 
 so
+
 $$
 f^*(\boldsymbol{x}) = Median_{\mathsf{y} \sim p_{data}(\boldsymbol{y}\,|\,\boldsymbol{x})}[\boldsymbol{y}]
 $$
+
 which means **mean absolute error** cost function yields a function that predicts the **median** value of $\boldsymbol{y}$ for each value of $\boldsymbol{x}$.
 
 ### 6.2.2 Output Units
@@ -180,9 +185,11 @@ which means **mean absolute error** cost function yields a function that predict
 Given features $\boldsymbol{h}$ , the output units produces a vector $\hat{\boldsymbol{y}} = \boldsymbol{W}^T \boldsymbol{h} + \boldsymbol{b}$ .
 
 The Linear output layers are often used to produce the mean of a conditional Gaussian distribution:
+
 $$
 p(\boldsymbol{y} \, | \, \boldsymbol{x}) = \mathcal{N}(\boldsymbol{y} ; \hat{\boldsymbol{y}},\boldsymbol{I})
 $$
+
 **Maximizing the log-likelihood** is then equivalent to **minimizing the mean squared error.**
 
 #### 6.2.2.2 Sigmoid Units for Bernoulli Output Distributions
@@ -198,11 +205,11 @@ P(y=1 \,|\, \boldsymbol{x}) = \max \left\{ 0, \min\left\{ 1, \boldsymbol{w}^T \b
 $$
 
 but the gradient would be 0. so we use sigmoid:
+
 $$
 P(y=1\, |\,\boldsymbol{x}) = \sigma(\boldsymbol{w}^T \boldsymbol{h} + b) \\
 \sigma(z) = \frac{1}{1+\exp(-z)}
 $$
-
 
 ![](https://ws2.sinaimg.cn/large/006tNc79ly1fyw4yzgl4zj30va0numyt.jpg)
 
@@ -239,10 +246,13 @@ and $\zeta(x) = \log (1 + exp(x))$ is called **softplus function**
 ![](https://ws1.sinaimg.cn/large/006tNc79ly1fyw6h34fm8j30uo0n63zm.jpg)
 
 so it saturates only when $(1-2y_{gt})z$  is **very negative**, which occurs when the model already has the right answer: ( $z$ is very positive and $y_{gt}=1$ ) or ( $z$ is very negative and $y_{gt}=0$ ) . When the model is totally wrong: ( $z$ is very positive but $y_{gt} = 0$ ) or ($z$ is very negative and $y_{gt}=1$) , the $(1-2y_{gt})z$ is very positive ( close to $|z|$) and the softplus function asymptotes toward $|z|$ , with derivative asymptotes to $sign(z)$. 
+
 If we use other loss function, MSE e.g., the loss function saturates anytime $\sigma(z)$ saturates. The sigmoid function saturates to $0$ when $z$ becomes very negative and saturates to $1$ when $z$ becomes very positive, no matter the model has the correct answer or the incorrect answer.
+
 For this reason, **maximum likelihood** is almost always the **preferred** approach to training **sigmoid output units**.
 
 **Notes** : In software implementations, to avoid numerical problems, we should write the negative log-likelihood $-\log P(y_{gt} \,|\, \boldsymbol{x})$ as a function of $z$ : $\zeta((1-2y_{gt})z)$, rather than as a function of $\hat{y}=\sigma(z)$ : $- \log \sigma((2y_{gt}-1)z)$ . Because if the sigmoid function **underflow**s to $0$, then taking the logarithm of $\hat{y}$ would get **negative infinity**.
+
 for example, if the $z$ is wrong( initialization e.g.), maybe $z = -0.1x+0.5$ ,but for positive $x$, the $y_{gt} = 1$ . The part of $\log$ as a function of $\hat{y}$ is  $\sigma((2y_{gt}-1)z)$, and the counterpart of $z$ is $1+\exp((1-2y_{gt})z)$.
 
 ![](https://ws3.sinaimg.cn/large/006tNc79ly1fywt1aw95cj30lz0bnaar.jpg)
@@ -282,6 +292,7 @@ softmax(\boldsymbol{z}) = softmax(\boldsymbol{z}- \max_i z_i)
 $$
 
 if the ground truth $i$ of $z$ : $z_i = \max_i z_i$ and $z_i$ is much greater than all the others, $softmax(z)_i$ saturates to 1. if $z_i$ is not maximal and the maximal value is much greater, the $softmax(z)_i$ saturates to 0.
+
 #### 6.2.2.4 Other Output Types
 
 ## 6.3 Hidden Units
@@ -300,6 +311,6 @@ One possibility is to not have an activation at all. If every layer of the neura
 Considering a $n$-dimension input and $p$-dimension output layer $\boldsymbol{h}=g(\boldsymbol{W}^T \boldsymbol{x}+\boldsymbol{b}) = g(\boldsymbol{V}^T\boldsymbol{U}^T \boldsymbol{x}+\boldsymbol{b})$ , $\boldsymbol{W} \in \mathbb{R}^{n \times p}, \boldsymbol{U} \in \mathbb{R}^{n \times q}, \boldsymbol{V} \in \mathbb{R}^{q \times p}$
 if $q(n+p) < np$ ,it can save parameters. It comes at the cost of constraining the linear transformation to be low rank, but these low-rank relationships are often suﬃcient.
 others:
-1. radial basis function, RBF: $h_i = \exp(-\frac{1}{\sigma_i^2} || \boldsymbol{W}_{:,i} - \boldsymbol{x} ||^2)$
+1. radial basis function, RBF: $h_i = \exp(-\frac{1}{\sigma_i^2} \left\| \boldsymbol{W}_{:,i} - \boldsymbol{x} \right\|^2)$
 2. softplus $\zeta(z) = \log(1+e^z)$ , a smoother version of ReLU.
 3. hard tans: $g(z) = \max(-1, \min(1,z))$
