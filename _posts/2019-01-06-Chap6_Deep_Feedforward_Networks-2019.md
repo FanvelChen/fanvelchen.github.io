@@ -314,3 +314,51 @@ others:
 1. radial basis function, RBF: $h_i = \exp(-\frac{1}{\sigma_i^2} \left\| \left\| \boldsymbol{W}_{:,i} - \boldsymbol{x} \right\| \right\|^2)$
 2. softplus $\zeta(z) = \log(1+e^z)$ , a smoother version of ReLU.
 3. hard tans: $g(z) = \max(-1, \min(1,z))$
+
+## 6.4 Architecture Design
+
+### 6.4.1 Universal Approximation Properties and Depth
+
+**universal approximation theorem** states that a feedforward network with a linear ouput layer and at leat one hidden layer with any "squashing" activation function can approximate any **Borel measurable function** from one finite-dimensional space to another with any desired nonzero amount of error, provided that the network is given enough hidden units.
+
+we choose deeper model rather than wider model.
+
+### 6.4.2 Other Architectural Considerations
+
+In general, the layers need not be connected in a chain. 
+
+Another key consideration of architecture design is exactly how to connect a pair of layers to each other. Every input unit is connected to every outputunit. or a sparse connections.
+
+## 6.5 Back-Propagation and Other DiﬀerentiationAlgorithms
+
+Actually, back-propagationrefers only to the method for computing the gradient.
+
+### 6.5.1 Computational Graphs
+
+### 6.5.2 Chain Rule of Calculus
+
+$y = g(x)$ and $z = f(g(x)) = f(y)$
+
+$$
+\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}
+$$
+
+and we can generalize this beyong the scalar case. $\boldsymbol{x} \in \mathbb{R}^m$ , $\boldsymbol{y} \in \mathbb{R}^n$.
+
+$$
+\frac{\partial z}{\partial x_i} = \sum_j \frac{\partial z}{\partial y_j} \frac{\partial y_j}{\partial x_i}
+$$
+
+or in vector notation
+
+$$
+\nabla_{\boldsymbol{x}}z = \left( \frac{\partial \boldsymbol{y}}{\partial \boldsymbol{x}} \right)^T \nabla_{\boldsymbol{y}}z
+$$
+
+or even in tensor 
+
+$$
+\nabla_{\mathsf{X}}z = \sum_j (\nabla_{\mathsf{X}} \mathsf{Y}_j) \frac{\partial z}{\partial \mathsf{Y}_j}
+$$
+
+### 6.5.3 Recursively Applying the Chain Rule to Obtain Backprop
