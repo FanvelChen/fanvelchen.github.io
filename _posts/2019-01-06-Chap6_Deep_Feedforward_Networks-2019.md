@@ -245,13 +245,13 @@ and $\zeta(x) = \log (1 + exp(x))$ is called **softplus function**
 
 ![](https://ws1.sinaimg.cn/large/006tNc79ly1fyw6h34fm8j30uo0n63zm.jpg)
 
-so it saturates only when $(1-2y_{gt})z$  is **very negative**, which occurs when the model already has the right answer: ( $z$ is very positive and $y_{gt}=1$ ) or ( $z$ is very negative and $y_{gt}=0$ ) . When the model is totally wrong: ( $z$ is very positive but $y_{gt} = 0$ ) or ($z$ is very negative and $y_{gt}=1$) , the $(1-2y_{gt})z$ is very positive ( close to $|z|$) and the softplus function asymptotes toward $|z|$ , with derivative asymptotes to $sign(z)$. 
+so it saturates only when $(1-2y_{gt})z$  is **very negative**, which occurs when the model already has the right answer: ( $z$ is very positive and $y_{gt}=1$ ) or ( $z$ is very negative and $y_{gt}=0$ ) . When the model is totally wrong: ( $z$ is very positive but $y_{gt} = 0$ ) or ($z$ is very negative and $y_{gt}=1$) , the $(1-2y_{gt})z$ is very positive ( close to $\left\| z \right\|$) and the softplus function asymptotes toward $\left\| z \right\|$ , with derivative asymptotes to $sign(z)$. 
 
 If we use other loss function, MSE e.g., the loss function saturates anytime $\sigma(z)$ saturates. The sigmoid function saturates to $0$ when $z$ becomes very negative and saturates to $1$ when $z$ becomes very positive, no matter the model has the correct answer or the incorrect answer.
 
 For this reason, **maximum likelihood** is almost always the **preferred** approach to training **sigmoid output units**.
 
-**Notes** : In software implementations, to avoid numerical problems, we should write the negative log-likelihood $-\log P(y_{gt} \,|\, \boldsymbol{x})$ as a function of $z$ : $\zeta((1-2y_{gt})z)$, rather than as a function of $\hat{y}=\sigma(z)$ : $- \log \sigma((2y_{gt}-1)z)$ . Because if the sigmoid function **underflow**s to $0$, then taking the logarithm of $\hat{y}$ would get **negative infinity**.
+**Notes** : In software implementations, to avoid numerical problems, we should write the negative log-likelihood $-\log P(y_{gt} \, \| \, \boldsymbol{x})$ as a function of $z$ : $\zeta((1-2y_{gt})z)$, rather than as a function of $\hat{y}=\sigma(z)$ : $- \log \sigma((2y_{gt}-1)z)$ . Because if the sigmoid function **underflow**s to $0$, then taking the logarithm of $\hat{y}$ would get **negative infinity**.
 
 for example, if the $z$ is wrong( initialization e.g.), maybe $z = -0.1x+0.5$ ,but for positive $x$, the $y_{gt} = 1$ . The part of $\log$ as a function of $\hat{y}$ is  $\sigma((2y_{gt}-1)z)$, and the counterpart of $z$ is $1+\exp((1-2y_{gt})z)$.
 
