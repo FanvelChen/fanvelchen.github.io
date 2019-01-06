@@ -32,13 +32,13 @@ $$
 J(\boldsymbol{\theta}) = \frac{1}{4}\sum_{x \in \mathbb{X}} (f^*(\boldsymbol{x})-f(\boldsymbol{x};\boldsymbol{\theta}))
 $$
 
-$\mathbb{X}=\{  [0,0]^T ,  [0,1]^T ,  [1,0]^T ,  [1,1]^T  \}$ as train data and test data( just learn XOR and forgot generalization )
+$\mathbb{X}=\left\{  [0,0]^T ,  [0,1]^T ,  [1,0]^T ,  [1,1]^T  \right\}$ as train data and test data( just learn XOR and forgot generalization )
 
 hidden units $\boldsymbol{h}=f^{(1)}(\boldsymbol{x};\boldsymbol{W},\boldsymbol{c})$ , and output $y = f^{(2)}(\boldsymbol{x};\boldsymbol{w},b)$
 
 and the complete model is $f(\boldsymbol{x};\boldsymbol{W},\boldsymbol{c},\boldsymbol{w},b) = f^{(2)}(f^{(1)}(x))$
 
-Then choose $f^{(1)}$ , it shouldn't be linear. We choose **activation function** after affine transformation $\boldsymbol{h} = g(\boldsymbol{W}^T\boldsymbol{x}+\boldsymbol{c})$ , ans respectively $\boldsymbol{h}_i = g(\boldsymbol{x}^T \boldsymbol{W}_{:,i} + \boldsymbol{c_i})$
+Then choose $f^{(1)}$ , it shouldn't be linear. We choose **activation function** after affine transformation $\boldsymbol{h} = g(\boldsymbol{W}^T\boldsymbol{x}+\boldsymbol{c})$ , and respectively $\boldsymbol{h}_i = g(\boldsymbol{x}^T \boldsymbol{W}_{:,i} + \boldsymbol{c_i})$
 
 the default recommendation is to use *rectified linear unit* or **ReLU** :
 
@@ -299,7 +299,7 @@ if the ground truth $i$ of $z$ : $z_i = \max_i z_i$ and $z_i$ is much greater th
 
 ### 6.3.1 Rectiﬁed Linear Units and Their Generalizations
 
-Rectiﬁed linear units use the activation function $g(z)=\max \{ 0,z \}$
+Rectiﬁed linear units use the activation function $g(z)=\max \left\{ 0,z \right\}$
 
 ### 6.3.2 Logistic Sigmoid and Hyperbolic Tangent
 
