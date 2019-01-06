@@ -3,7 +3,7 @@ layout:     post
 title:      Chap6 Deep Feedforward Networks
 date:       2019-01-06
 author:     Fanvel Chen
-header-img: img/posts/rigde_regression_bg.jpg
+header-img: img/posts/chap6_img.jpg
 catalog:    true
 mathjax:    true
 tags:
