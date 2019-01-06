@@ -30,11 +30,15 @@ $$
 J(\boldsymbol{\theta}) = \frac{1}{4}\sum_{x \in \mathbb{X}} (f^*(\boldsymbol{x})-f(\boldsymbol{x};\boldsymbol{\theta}))
 $$
 
-$\mathbb{X}=\left\{  [0,0]^T ,  [0,1]^T ,  [1,0]^T ,  [1,1]^T  \right\}$ as train data and test data( just learn XOR and forgot generalization )
+$\mathbb{X}=\{  [0,0]^T ,  [0,1]^T ,  [1,0]^T ,  [1,1]^T  \}$ as train data and test data( just learn XOR and forgot generalization )
+
 hidden units $\boldsymbol{h}=f^{(1)}(\boldsymbol{x};\boldsymbol{W},\boldsymbol{c})$ , and output $y = f^{(2)}(\boldsymbol{x};\boldsymbol{w},b)$
+
 and the complete model is $f(\boldsymbol{x};\boldsymbol{W},\boldsymbol{c},\boldsymbol{w},b) = f^{(2)}(f^{(1)}(x))$
-Then choose $f^{(1)}$ , it shouldn't be linear. We choose **activation function** after affine transformation $\boldsymbol{h} = g(\boldsymbol{W}^T\boldsymbol{x}+\boldsymbol{c})$ , ans respectively $\boldsymbol{h}_i = g(\boldsymbol{x}^T\boldsymbol{W}_{:,i}+\boldsymbol{c_i})$
-the default recommendation is to use $rectified \; linear \; unit$ or **ReLU** :
+
+Then choose $f^{(1)}$ , it shouldn't be linear. We choose **activation function** after affine transformation $\boldsymbol{h} = g(\boldsymbol{W}^T\boldsymbol{x}+\boldsymbol{c})$ , ans respectively $\boldsymbol{h}_i = g(\boldsymbol{x}^T \boldsymbol{W}_{:,i} + \boldsymbol{c_i})$
+
+the default recommendation is to use *rectified linear unit* or **ReLU** :
 
 $$
 g(z)=\max \left\{ 0,z\right\}
@@ -145,7 +149,7 @@ We can view the const function as being a **functional**  rather than just a fun
 
 **calculus of variations** can be used to derive the following two results:
 
-1. 
+1
 
 $$
 f^* = \arg \min_f \mathbb{E}_{\mathsf{x,y} \sim p_{data} }||\boldsymbol{y} -f(\boldsymbol{x})||^2
@@ -157,7 +161,7 @@ f^*(\boldsymbol{x}) = \mathbb{E}_{\mathsf{y} \sim p_{data}(\boldsymbol{y}\,|\,\b
 $$
 which means **mean squared error** cost function gives a function that predicts the **mean** of $\boldsymbol{y}$ for each value of $\boldsymbol{x}$.
 
-2. 
+2
 
 $$
 f^* = \arg \min_f \mathbb{E}_{\mathsf{x,y} \sim p_{data} }||\boldsymbol{y} -f(\boldsymbol{x})||_1
@@ -253,7 +257,7 @@ $$
 \boldsymbol{z} = \boldsymbol{W}^T \boldsymbol{h} + \boldsymbol{b}
 $$
 
-where $z_i = \log \hat{P}(y = i \,|\, \boldsymbol{x})$, and we exponentiate and normalize $z$:
+where $z_i = \log \hat{P}(y = i \, | \, \boldsymbol{x})$ , and we exponentiate and normalize $z$:
 
 $$
 softmax(\boldsymbol{z})_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
@@ -284,7 +288,7 @@ if the ground truth $i$ of $z$ : $z_i = \max_i z_i$ and $z_i$ is much greater th
 
 ### 6.3.1 Rectiﬁed Linear Units and Their Generalizations
 
-Rectiﬁed linear units use the activation function $g(z)=\max \left\{ 0,z\right\}$
+Rectiﬁed linear units use the activation function $g(z)=\max \{ 0,z \}$
 
 ### 6.3.2 Logistic Sigmoid and Hyperbolic Tangent
 
@@ -296,6 +300,6 @@ One possibility is to not have an activation at all. If every layer of the neura
 Considering a $n$-dimension input and $p$-dimension output layer $\boldsymbol{h}=g(\boldsymbol{W}^T \boldsymbol{x}+\boldsymbol{b}) = g(\boldsymbol{V}^T\boldsymbol{U}^T \boldsymbol{x}+\boldsymbol{b})$ , $\boldsymbol{W} \in \mathbb{R}^{n \times p}, \boldsymbol{U} \in \mathbb{R}^{n \times q}, \boldsymbol{V} \in \mathbb{R}^{q \times p}$
 if $q(n+p) < np$ ,it can save parameters. It comes at the cost of constraining the linear transformation to be low rank, but these low-rank relationships are often suﬃcient.
 others:
-1. radial basis function, RBF: $h_i = \exp(-\frac{1}{\sigma_i^2}||\boldsymbol{W}_{:,i} - \boldsymbol{x} ||^2)$
+1. radial basis function, RBF: $h_i = \exp(-\frac{1}{\sigma_i^2} || \boldsymbol{W}_{:,i} - \boldsymbol{x} ||^2)$
 2. softplus $\zeta(z) = \log(1+e^z)$ , a smoother version of ReLU.
 3. hard tans: $g(z) = \max(-1, \min(1,z))$
