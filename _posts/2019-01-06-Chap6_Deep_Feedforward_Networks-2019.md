@@ -32,7 +32,7 @@ $$
 J(\boldsymbol{\theta}) = \frac{1}{4}\sum_{x \in \mathbb{X}} (f^*(\boldsymbol{x})-f(\boldsymbol{x};\boldsymbol{\theta}))
 $$
 
-$\mathbb{X}=\left\{  [0,0]^T ,  [0,1]^T ,  [1,0]^T ,  [1,1]^T  \right\}$ as train data and test data( just learn XOR and forgot generalization )
+$\mathbb{X}=\lbrace  [0,0]^T ,  [0,1]^T ,  [1,0]^T ,  [1,1]^T  \rbrace$ as train data and test data( just learn XOR and forgot generalization )
 
 hidden units $\boldsymbol{h}=f^{(1)}(\boldsymbol{x};\boldsymbol{W},\boldsymbol{c})$ , and output $y = f^{(2)}(\boldsymbol{x};\boldsymbol{w},b)$
 
@@ -299,7 +299,7 @@ if the ground truth $i$ of $z$ : $z_i = \max_i z_i$ and $z_i$ is much greater th
 
 ### 6.3.1 Rectiﬁed Linear Units and Their Generalizations
 
-Rectiﬁed linear units use the activation function $g(z)=\max \left\{ 0,z \right\}$
+Rectiﬁed linear units use the activation function $g(z)=\max \lbrace 0,z \rbrace$
 
 ### 6.3.2 Logistic Sigmoid and Hyperbolic Tangent
 
