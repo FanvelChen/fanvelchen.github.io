@@ -38,7 +38,8 @@ hidden units $\boldsymbol{h}=f^{(1)}(\boldsymbol{x};\boldsymbol{W},\boldsymbol{c
 
 and the complete model is $f(\boldsymbol{x};\boldsymbol{W},\boldsymbol{c},\boldsymbol{w},b) = f^{(2)}(f^{(1)}(x))$
 
-Then choose $f^{(1)}$ , it shouldn't be linear. We choose **activation function** after affine transformation $\boldsymbol{h} = g(\boldsymbol{W}^T\boldsymbol{x}+\boldsymbol{c})$ , and respectively $ \boldsymbol{h}_i = g( \boldsymbol{x}^T \boldsymbol{W}_{:,i} + \boldsymbol{c_i})$
+Then choose $f^{(1)}$ , it shouldn't be linear. We choose **activation function** after affine transformation $\boldsymbol{h} = g(\boldsymbol{W}^T\boldsymbol{x}+\boldsymbol{c})$ , and respectively 
+$\boldsymbol{h}_{i} = g( \boldsymbol{x}^T \boldsymbol{W}_{:,i} + \boldsymbol{c_i})$
 
 the default recommendation is to use *rectified linear unit* or **ReLU** :
 
