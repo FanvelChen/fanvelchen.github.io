@@ -362,3 +362,111 @@ $$
 $$
 
 ### 6.5.3 Recursively Applying the Chain Rule to Obtain Backprop
+
+![chain](https://ws3.sinaimg.cn/large/006tNc79ly1fyx87qxbmgj302i0c3dg2.jpg)
+
+$$
+\begin{align}
+\begin{split}
+\frac{\partial z}{\partial w} &= \frac{\partial z}{\partial y} \frac{\partial y}{\partial x} \frac{\partial x}{\partial w} \\
+&= f'(f(f(w))) f'(f(w))f'(w)
+\end{split}
+\end{align}
+$$
+
+so we should store $f(w)$ .
+
+**Algorithms 6.1**
+$n_i$ inputs $u^{(1)}$ to $u^{(n_i)}$ to an output $u^{(n)}$. $mathbb{A}^{(i)}$ comprises the values of previous nodes $u^{(j)}$, $j < i , j \in Pa(u^{(i)})$.  The input to the computational graph is the vector $\boldsymbol{x}$.
+
+**for** $i=1,\cdots ,n_i$  **do**
+$\quad u^{(i)} \gets x_i$
+**end for**
+**for** $i = n_i+1 , \cdots , n$ **do**
+$\quad \mathbb{A}^{(i)} \gets \lbrace  u^{(j)} \| j \in Pa(u^{(i)})  \rbrace$
+$\quad u^{(i)} \gets f^{(i)}(\mathbb{A}^{(i)})$
+**end for**
+**return** $u^{(n)}$
+
+**Algorithms 6.2**
+Simplified version of the back-propagation.
+
+run Algorithms 6.1
+Initilize *grad_table*, used to store the derivatives.
+*grad_table*$[u^{(n)}] \gets 1$
+**for** $j = n - 1$ down to $1$  **do**
+&emsp;*grad_table*$[u^{(j)}] \gets \sum_{i:j \in Pa(u^{i})}$*grad_table*$[u^{(i)}]\frac{\partial u^{(i)}}{\partial u^{(j)}}$
+**end for**
+**return** *grad_table*
+
+#### 6.5.4 Back-Propagation Computation in Fully Connected MLP
+
+**Algorithms 6.3** : Forward propagation and cumputation of the cost function
+depth $l$
+$\boldsymbol{h}^{(0)} = \boldsymbol{x}$
+**for** $k=1, \cdots, l$ **do**
+$\quad \boldsymbol{a}^{k} = \boldsymbol{b}^{(k)} + \boldsymbol{W}^{(k)} \boldsymbol{h}^{(k-1)}$
+$\quad \boldsymbol{h} = f(\boldsymbol{a}^{(k)})$
+**end for**
+$\hat{\boldsymbol{y}} = \boldsymbol{h}^{(l)}$
+$J=L(\hat{\boldsymbol{y}} ,\boldsymbol{y}) + \lambda \Omega(\theta)$
+
+**Algorithms 6.4** : backward computation after Algorithms 6.3
+compute the gradient on the output layer
+$\boldsymbol{g} \gets \nabla_{\hat{\boldsymbol{y}}} J = \nabla_{\hat{\boldsymbol{y}}} L(\hat{\boldsymbol{y}} , \boldsymbol{y})$
+**for** $k = l, l-1, \cdots, 1$ **do**
+&emsp; $\boldsymbol{g} \gets \nabla_{\boldsymbol{a^{(k)}}} J = \boldsymbol{g} \odot f'(\boldsymbol{a^{(a)}})$ 
+&emsp; $\nabla_{\boldsymbol{b^{(k)}}} J = \boldsymbol{g} + \lambda \nabla_{\boldsymbol{b^{(k)}}} \Omega (\theta)$
+&emsp; $\nabla_{\boldsymbol{W^{(k)}}} J = \boldsymbol{gh^{(k-1)T}} + \lambda \nabla_{\boldsymbol{W^{(k)}}} \Omega (\theta)$
+&emsp; $\boldsymbol{g} \gets \nabla_{\boldsymbol{h^{(k-1)}}} J = \boldsymbol{W^{(k)T}} \boldsymbol{g}$
+**end for**
+
+### 6.5.5 Symbold-to-Symbol Derivatives
+
+1. symbol-to-number differentiation: take a computational graph and a set of numerical values for the inputs to the graph: Torch caffe
+2. take a computational graph and add additional nodes to the graph that provide a symbolic description of the desired derivatives: Theano, TensorFlow
+
+![symbol2symbol](https://ws3.sinaimg.cn/large/006tNc79ly1fyzjhs8q9wj30k40egmz3.jpg)
+
+### 6.5.6 General Back-Propagation
+
+each node in the grapg $\mathcal{G}$ corresponds to a variable $\mathsf{V}$
+
+- *get_operation* $(\mathsf{V})$: the edges coming into $\mathsf{V}$
+- *get_consumers* ($\mathsf{V},\mathcal{G}$) : children of $\mathsf{V}$
+- *get_inputs* ($\mathsf{V},\mathcal{G}$) : parents of $\mathsf{V}$
+
+**Algorithms 6.5** : skeleton of backprop
+**Require** $\mathbb{T}$ the target set of variables whose gradients must be computed
+**Require** $\mathcal{G}$ 
+**Require** $z$ the variable to be differentiated
+&emsp; Prune $\mathcal{G}$ to $\mathcal{G}'$, only containing nodes that are ancestors of $z$ and descendents of nodes in $\mathbb{T}$
+&emsp;initialize *grad_table*
+&emsp; *grad_table* $[z] \gets 1$
+&emsp; **for** $\mathsf{V} in \mathbb{T}$ **do**
+&emsp; &emsp; *build_grad* ( $\mathsf{V}, \mathcal{G}, \mathcal{G}',$ *grad_table* )
+&emsp; **end for**
+&emsp; Return *grad_table*
+
+**Algorithms 6.6** *build_grad*
+*if* $\mathsf{V}$ is in *grad_table* **then**
+&emsp; Return *grad_table* $[\mathsf{V}]$
+**end if**
+$i \gets 1$
+**for** $\mathsf{C}$ in *get_consumers* $(\mathsf{V},\mathcal{G}')$  **do**
+&emsp; *op* $\gets$ *get_operation* $(\mathsf{C})$
+&emsp; $\mathsf{D} \gets$ *build_grad* (  $\mathsf{C}, \mathcal{G}, \mathcal{G}'$  *grad_table*)
+&emsp; $\mathsf{G}^{(i)} \gets$ *op.bprop* ( *get_inputs* ( $\mathsf{C}, \mathcal{G}'$  ) $\mathsf{V}, \mathsf{D}$   )
+&emsp $i \gets i+1$
+**end for**
+$\mathsf{G} \gets \sum_i \mathsf{G}^{(i)}$
+*grad_table* $[\mathsf{V}] = \mathsf{G}$
+return $\mathsf{G}$
+
+### 6.5.7 Example: Back-Propagation for MLP Training
+
+Here we develop a very simple multilayer perceptron with a single hiddenlayer. we use minibatch stochastic gradient descent.
+
+input $\boldsymbol{X}$ with label $\boldsymbol{y}$
+
+hidden features $\boldsymbol{H} = \max \lbrace 0, \boldsymbol{XW^{(1)}} \rbrace$
