@@ -533,3 +533,23 @@ cost function:
 $$
 J = J_{MLE} + \lambda \left( \sum_{i,j}(W_{i,j}^{(1)})^2 + \sum_{i,j}(W_{i,j}^{(2)})^2 \right)
 $$
+
+![computationalgraph](https://ws4.sinaimg.cn/large/006tNc79ly1fz09lbysmnj30n10g776k.jpg)
+
+### 6.5.8 Complications
+
+1. memory consumption. maintain a single buffer
+2. data types. 32-bit or 64-bit
+3. undefined gradients
+
+### 6.5.9 Differentiation outside the Deep Learning Community
+
+Finding the optimalsequence of operations to compute the gradient is NP-complete.
+
+backprop algorithm above is a special case of a broader class of techniques called **reverse mode accumulation**.
+
+When the number of outputs of the graph islarger than the number of inputs, it is sometimes preferable to use another form of automatic diﬀerentiation called **forward mode accumulation**.
+
+### 6.5.10 Higher-Order Derivatives
+
+Instead of explicitly computing the Hessian, the typical deep learning approachis to use **Krylov methods**.
