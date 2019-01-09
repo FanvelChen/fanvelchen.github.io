@@ -20,7 +20,9 @@ we penalizes only the weights of the aﬃne transformation at each layer and lea
 
 ### 7.1.1 $L^2$ Parameter Regularization
 
-$\Omega (\boldsymbol{\theta}) = \frac{1}{2} \left| \left| \boldsymbol{w} \right| \right|_{2}^{2}$
+$$
+\Omega (\boldsymbol{\theta}) = \frac{1}{2} \left| \left| \boldsymbol{w} \right| \right|_{2}^{2}
+$$
 
 the update is
 
@@ -32,7 +34,9 @@ It shrink the weight vector by a constant factor on each step.
 
 ### 7.1.2 $L^1$ Parameter Regularization
 
-$\Omega (\boldsymbol{\theta}) = \frac{1}{2} \left| \left| \boldsymbol{w} \right| \right|_{1} = \sum_i \left| w_i  \right|$
+$$
+\Omega (\boldsymbol{\theta}) = \frac{1}{2} \left| \left| \boldsymbol{w} \right| \right|_{1} = \sum_i \left| w_i  \right|
+$$
 
 more sparse than $L^2$
 
