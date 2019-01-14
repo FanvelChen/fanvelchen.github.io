@@ -3,7 +3,7 @@ layout:     post
 title:      SimpleNet Inplementation
 date:       2019-01-14
 author:     Fanvel Chen
-header-img: img/posts/chap6_img.jpg
+header-img: img/posts/implementaion_img.jpg
 catalog:    true
 mathjax:    true
 tags:
