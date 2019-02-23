@@ -11,8 +11,6 @@ tags:
     - MLAPP
 ---
 
-[TOC]
-
 # MLAPP 第7章 线性回归（Linear Regression）
 
 ## Model specification
@@ -60,7 +58,7 @@ $$
 {\rm RSS}(\boldsymbol{\mathbf{w}}) \triangleq \sum_{i=1}^N (y_i - \boldsymbol{\mathbf{w}}^T \boldsymbol{\mathbf{x}}_{i}))^2
 $$
 
-RSS/N 称为 **mean squared error (MSE) ** ，所以 MLE 等价于最小化  NLL 或者 RSS 或者 MSE ，即 **least squares**。
+RSS/N 称为 **mean squared error (MSE)** ，所以 MLE 等价于最小化  NLL 或者 RSS 或者 MSE ，即 **least squares**。
 
 ### Derivation of the MLE
 
@@ -386,7 +384,7 @@ Figure1 Plugin approximation VS Posterior predictive
 
 ### Bayesian inference when $\sigma^2$ is unknown
 
-上面我们假设 $\sigma^2$ 已知，据此求 $p(\boldsymbol{\mathbf{w}} \,|\,  \mathcal{D}, \sigma^2)$，下面假设 $\sigma^2$ 未知，计算 $p(\boldsymbol{\mathbf{w}} , \sigma^2 \,|\,  \mathcal{D})$
+上面我们假设 $\sigma^2$ 已知，据此求 $p(\boldsymbol{\mathbf{w}} \,\|\,  \mathcal{D}, \sigma^2)$，下面假设 $\sigma^2$ 未知，计算 $p(\boldsymbol{\mathbf{w}} , \sigma^2 \,\|\,  \mathcal{D})$
 
 #### Conjugate prior
 
@@ -448,11 +446,11 @@ $$
 
 #### Uninformative prior
 
-对$\sigma^2$ 的无信息先验：$a_0=b_0=0$。**g-prior** ：$\boldsymbol{\mathbf{w}}_0 = \boldsymbol{\mathbf{0}} \, , \, \boldsymbol{\mathbf{V}}_0 = g(\boldsymbol{\mathbf{X}}^T\boldsymbol{\mathbf{X}})^{-1}$ g 是个正值。$g = \infin$ 时即对 $\boldsymbol{\mathbf{w}}$ 无信息先验。
+对$\sigma^2$ 的无信息先验：$a_0=b_0=0$。**g-prior** ：$\boldsymbol{\mathbf{w}}_0 = \boldsymbol{\mathbf{0}} \, , \, \boldsymbol{\mathbf{V}}_0 = g(\boldsymbol{\mathbf{X}}^T\boldsymbol{\mathbf{X}})^{-1}​$ g 是个正值。$g = \infty​$ 时即对 $\boldsymbol{\mathbf{w}}​$ 无信息先验。
 
-此时和 $\boldsymbol{\mathbf{w}}_0 = \boldsymbol{\mathbf{0}} , \boldsymbol{\mathbf{v}}_0 = \infin \boldsymbol{\mathbf{I}}, a_0 = 0, b_0 = 0$ 等价，得到 $p(\boldsymbol{\mathbf{w}},\sigma^2) \propto \sigma^{-(D+2)}$
+此时和 $\boldsymbol{\mathbf{w}}_0 = \boldsymbol{\mathbf{0}} , \boldsymbol{\mathbf{v}}_0 = \infty \boldsymbol{\mathbf{I}}, a_0 = 0, b_0 = 0$ 等价，得到 $p(\boldsymbol{\mathbf{w}},\sigma^2) \propto \sigma^{-(D+2)}$
 
-或者，可以用半共轭先验 $p(\boldsymbol{\mathbf{w}},\sigma^2) = p(\boldsymbol{\mathbf{w}}) p(\sigma^2) $ ，各自取无信息极限，得到 $p(\boldsymbol{\mathbf{w}},\sigma^2) \propto \sigma^{-2}$ ，这等价于 NIG先验 $\boldsymbol{\mathbf{w}}_0 = \boldsymbol{\mathbf{0}} , \boldsymbol{\mathbf{v}}_0 = \infin \boldsymbol{\mathbf{I}}, a_0 = -D/2f, b_0 = 0$
+或者，可以用半共轭先验 $p(\boldsymbol{\mathbf{w}},\sigma^2) = p(\boldsymbol{\mathbf{w}}) p(\sigma^2) $ ，各自取无信息极限，得到 $p(\boldsymbol{\mathbf{w}},\sigma^2) \propto \sigma^{-2}$ ，这等价于 NIG先验 $\boldsymbol{\mathbf{w}}_0 = \boldsymbol{\mathbf{0}} , \boldsymbol{\mathbf{v}}_0 = \infty \boldsymbol{\mathbf{I}}, a_0 = -D/2f, b_0 = 0$
 
 此时后验为：
 
