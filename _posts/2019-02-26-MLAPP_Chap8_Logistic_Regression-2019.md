@@ -3,7 +3,7 @@ layout:     post
 title:      MLAPP Chap8 Logistic Regression
 date:       2019-02-26
 author:     Fanvel Chen
-header-img: img/posts/chap6_img.jpg
+header-img: img/posts/mlappBackground.jpg
 catalog:    true
 mathjax:    true
 tags:
